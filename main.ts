@@ -1,6 +1,5 @@
-//% weight=100 color=#DC22E1 block="MINTspark Google TM" blockId="MINTspark TeachableMachine" icon="\uf0e7"
-namespace ms_tmai {
-
+//% weight=100 color=#DC22E1 block="MINTspark Google TM" blockId="MINTspark Google TM" icon="\uf0e7"
+namespace ms_microbit_tm {
     let ClassNames: string[] = []
     let ClassScores: number[] = []
     let selectedClassName = "";
@@ -58,12 +57,14 @@ namespace ms_tmai {
         return ClassNames;
     }
 
+    // Read serial data
     let firstUpdate = true;
     serial.redirectToUSB();
     serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
         let rxData = serial.readUntil(serial.delimiters(Delimiters.NewLine))
         let messageParts = rxData.split(":")
 
+        // Clear classes and scores
         if (messageParts[0] == "reset") {
             firstUpdate = true;
             ClassNames = [];
@@ -72,11 +73,12 @@ namespace ms_tmai {
             selectedClassIndex = -1;
             selectedClassScore = -1;
         }
+        // Get labels for classes at beginning
         else if (messageParts[0] == "label") {
             ClassNames.push(messageParts[1]);
             ClassScores.push(0);
-            return;
         }
+        // Update scores for classes
         else {
             for (let i = 0; i < messageParts.length; i++) {
                 ClassScores[i] = parseFloat(messageParts[i]);
@@ -86,6 +88,7 @@ namespace ms_tmai {
         }
     })
 
+    // Background check to determine if classification has changed. Needs at least minimum score if set.
     control.inBackground(() => {
         let lastIndex = -1;
         let lastTopScore = 0;
@@ -117,7 +120,7 @@ namespace ms_tmai {
         }
     })
 
-    // Get top Classification
+    // Get current top Classification
     function setTopClassification(): void {
         let max: number = -1;
         let newIndex: number = -1;
@@ -135,14 +138,5 @@ namespace ms_tmai {
             selectedClassIndex = newIndex;
             selectedClassName = ClassNames[newIndex];
         }
-    }
-
-    function resetParameter(): void {
-        ClassNames = [];
-        ClassScores = [];
-        selectedClassName = "";
-        selectedClassIndex = -1;
-        selectedClassScore = -1;
-        minScore = 0;
     }
 }
