@@ -1,1 +1,148 @@
+//% weight=100 color=#DC22E1 block="MINTspark Google TM" blockId="MINTspark TeachableMachine" icon="\uf0e7"
+namespace ms_tmai {
 
+    let ClassNames: string[] = []
+    let ClassScores: number[] = []
+    let selectedClassName = "";
+    let selectedClassIndex = -1;
+    let selectedClassScore = -1;
+    let minScore = 0;
+
+    //% weight=100
+    //% block="Set Min Score %certainty"
+    export function setClassificationThreshold(certainty: number): void {
+        minScore = certainty;
+    }
+
+    let onClassificationChangedHandler: (predictionName: string, score: number) => void;
+
+    //% weight=50
+    //% block="Classification Changed"
+    //% draggableParameters = reporter
+    //% color=#00B1ED
+    //% blockGap=8
+    export function onClassificationChanged(handler: (Class: string, Score: number) => void) {
+        onClassificationChangedHandler = handler;
+    }
+
+    //% weight=80
+    //% block="Current Classification"
+    //% color=#00B1ED
+    export function getTopPredictioName(): string {
+        return selectedClassName;
+    }
+
+    //% weight=75
+    //% block="Current Score"
+    //% color=#00B1ED
+    export function getTopPredictioScore(): number {
+        return selectedClassScore;
+    }
+
+    //% weight=70
+    //% block="Get score for class %name"
+    //% color=#00B1ED
+    export function getClassScore(name: string): number {
+        let index = ClassNames.indexOf(name);
+        if (index > -1) {
+            return ClassScores[index];
+        }
+
+        return NaN;
+    }
+
+    //% weight=65
+    //% block="All Class Names"
+    //% color=#00B1ED
+    export function getClassNames(): string[] {
+        return ClassNames;
+    }
+
+    let firstUpdate = true;
+    serial.redirectToUSB();
+    serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
+        let rxData = serial.readUntil(serial.delimiters(Delimiters.NewLine))
+        let messageParts = rxData.split(":")
+
+        if (messageParts[0] == "reset") {
+            firstUpdate = true;
+            ClassNames = [];
+            ClassScores = [];
+            selectedClassName = "";
+            selectedClassIndex = -1;
+            selectedClassScore = -1;
+        }
+        else if (messageParts[0] == "label") {
+            ClassNames.push(messageParts[1]);
+            ClassScores.push(0);
+            return;
+        }
+        else {
+            for (let i = 0; i < messageParts.length; i++) {
+                ClassScores[i] = parseFloat(messageParts[i]);
+            }
+
+            firstUpdate = false;
+        }
+    })
+
+    control.inBackground(() => {
+        let lastIndex = -1;
+        let lastTopScore = 0;
+
+        while (true) {
+            if (!firstUpdate) {
+                let hasChanged = false;
+                setTopClassification();
+
+                if (onClassificationChangedHandler != null) {
+                    if (selectedClassScore < minScore && lastTopScore >= minScore) {
+                        lastIndex = -1;
+                        onClassificationChangedHandler("", -1);
+                    }
+                    else if (selectedClassScore >= minScore && lastTopScore < minScore) {
+                        lastIndex = selectedClassIndex;
+                        onClassificationChangedHandler(selectedClassName, selectedClassScore);
+                    }
+                    else if (lastIndex != selectedClassIndex && selectedClassScore >= minScore) {
+                        lastIndex = selectedClassIndex;
+                        onClassificationChangedHandler(selectedClassName, selectedClassScore);
+                    }
+
+                    lastTopScore = selectedClassScore;
+                }
+            }
+
+            basic.pause(300);
+        }
+    })
+
+    // Get top Classification
+    function setTopClassification(): void {
+        let max: number = -1;
+        let newIndex: number = -1;
+
+        for (let i = 0; i < ClassScores.length; i++) {
+            let value: number = ClassScores[i];
+            if (value > max) {
+                newIndex = i;
+                max = value;
+            }
+        }
+
+        selectedClassScore = max;
+        if (newIndex != selectedClassIndex) {
+            selectedClassIndex = newIndex;
+            selectedClassName = ClassNames[newIndex];
+        }
+    }
+
+    function resetParameter(): void {
+        ClassNames = [];
+        ClassScores = [];
+        selectedClassName = "";
+        selectedClassIndex = -1;
+        selectedClassScore = -1;
+        minScore = 0;
+    }
+}
