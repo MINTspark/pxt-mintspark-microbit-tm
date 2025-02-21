@@ -11,6 +11,9 @@ namespace ms_microbit_tm {
     let selectedClassScore = -1;
     let minScore = 0;
 
+    /**
+     * The MINTspark Google Teachable Machine Extension can be used with the following site: www.mintspark.io/microbit-tm/
+     */
     //% weight=100
     //% block="Use with: www.mintspark.io/microbit-tm/"
     export function showInfo(): void {
