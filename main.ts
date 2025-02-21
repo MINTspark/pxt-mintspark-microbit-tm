@@ -5,8 +5,8 @@
 //% inlineInputMode=external
 namespace ms_microbit_tm { 
     let selectedClassName = "";
-    let delegateArray : { (): void;} [] = [];
     let classNameArray : string[] = [];
+    let delegateArray: (() => void)[] = [];
 
     /**
      * The MINTspark Google Teachable Machine Extension can be used with the following site: www.mintspark.io/microbit-tm/
@@ -16,7 +16,7 @@ namespace ms_microbit_tm {
     export function showInfo(): void {
     }
 
-    let onClassificationChangedHandler: (predictionName: string) => void;
+    let onClassificationChangedHandler: (predictionName: string) => void = null;
 
     /**
      * This event block will run every time the classification changes. If a minimum score has been set then the top 
@@ -34,9 +34,7 @@ namespace ms_microbit_tm {
 
     //% weight=50
     //% block="%ClassName selected"
-    //% draggableParameters = reporter
     //% color=#00B1ED
-    //% blockGap=8
     export function onClassificationChangedTo(ClassName:string, handler: () => void) {
         delegateArray.push(handler);
         classNameArray.push(ClassName);
@@ -59,7 +57,12 @@ namespace ms_microbit_tm {
         if (rxData != selectedClassName)
         {
             selectedClassName = rxData;
-            onClassificationChangedHandler(rxData);
+
+            if (onClassificationChangedHandler != null)
+            {
+                onClassificationChangedHandler(rxData);
+            }
+
             let index = classNameArray.indexOf(selectedClassName);
             if (index > -1)
             {
