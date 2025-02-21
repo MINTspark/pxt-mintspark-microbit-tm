@@ -1,4 +1,8 @@
-//% weight=100 color=#DC22E1 block="MINTspark Google TM" blockId="MINTspark Google TM" icon="\uf0e7"
+//% weight=100 color=#DC22E1
+//% block="MINTspark Google TM"
+//% blockId="MINTspark Google TM"
+//% icon="\uf0e7"
+//% inlineInputMode=external
 namespace ms_microbit_tm {
     let ClassNames: string[] = []
     let ClassScores: number[] = []
@@ -6,6 +10,11 @@ namespace ms_microbit_tm {
     let selectedClassIndex = -1;
     let selectedClassScore = -1;
     let minScore = 0;
+
+    //% weight=100
+    //% block="Use with: www.mintspark.io/microbit-tm/"
+    export function showInfo(): void {
+    }
 
     //% weight=100
     //% block="Set Min Score %certainty"
@@ -16,7 +25,7 @@ namespace ms_microbit_tm {
     let onClassificationChangedHandler: (predictionName: string, score: number) => void;
 
     //% weight=50
-    //% block="Classification Changed"
+    //% block="Class Changed"
     //% draggableParameters = reporter
     //% color=#00B1ED
     //% blockGap=8
