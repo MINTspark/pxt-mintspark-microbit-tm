@@ -19,6 +19,9 @@ namespace ms_microbit_tm {
     export function showInfo(): void {
     }
 
+    /**
+     * Here you can set the minimum required threshold for a class to be selected as the detected class. If set to 0 then the top scoring class will be selected regardless of score.
+     */
     //% weight=100
     //% block="Set Min Score %certainty"
     export function setClassificationThreshold(certainty: number): void {
@@ -27,6 +30,11 @@ namespace ms_microbit_tm {
 
     let onClassificationChangedHandler: (predictionName: string, score: number) => void;
 
+    /**
+     * This event block will run every time the classification changes. If a minimum score has been set then the top 
+     * scoring class needs to be at that threshold as a minimum for this block to run. If all classes are below the 
+     * threshold then this block will NOT run.
+     */
     //% weight=50
     //% block="Class Changed"
     //% draggableParameters = reporter
@@ -36,20 +44,29 @@ namespace ms_microbit_tm {
         onClassificationChangedHandler = handler;
     }
 
+    /**
+     * Gets the name of the currently selected class. If a minimum threshold has been set then this block will return an empty string if no class is at the threshold or above.
+     */
     //% weight=80
-    //% block="Current Classification"
+    //% block="Selected Class"
     //% color=#00B1ED
-    export function getTopPredictioName(): string {
+    export function getSelectedClassName(): string {
         return selectedClassName;
     }
 
+    /**
+     * Gets the score of the currently selected class. If a minimum threshold has been set then this block will return -1 if no class is at the threshold or above.
+     */
     //% weight=75
-    //% block="Current Score"
+    //% block="Selected Class Score"
     //% color=#00B1ED
-    export function getTopPredictioScore(): number {
+    export function getSelectedClassScore(): number {
         return selectedClassScore;
     }
 
+    /**
+     * Gets the current score for the passed in class name. The minimum threshold does not affect this block.
+     */
     //% weight=70
     //% block="Get score for class %name"
     //% color=#00B1ED
@@ -62,6 +79,9 @@ namespace ms_microbit_tm {
         return NaN;
     }
 
+    /**
+     * Gets a text array with all class names.
+     */
     //% weight=65
     //% block="All Class Names"
     //% color=#00B1ED
