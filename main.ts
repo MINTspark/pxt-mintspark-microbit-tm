@@ -5,6 +5,7 @@
 //% inlineInputMode=external
 namespace ms_microbit_tm { 
     let selectedClassName = "";
+    let lastSelectedClassName = "";
     let classNameArray : string[] = [];
     let delegateArray: (() => void)[] = [];
     let onClassificationChangedHandler: (predictionName: string) => void = null;
@@ -51,22 +52,31 @@ namespace ms_microbit_tm {
 
     // Read serial data
     serial.redirectToUSB();
+
     serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
         let rxData = serial.readUntil(serial.delimiters(Delimiters.NewLine))
         if (rxData != selectedClassName)
         {
             selectedClassName = rxData;
-
-            if (onClassificationChangedHandler != null)
-            {
-                onClassificationChangedHandler(selectedClassName);
-            }
-
-            let index = classNameArray.indexOf(selectedClassName);
-            if (index > -1)
-            {
-                delegateArray[index]();
-            }
         }
     })
+
+    control.inBackground(() =>{
+        while(true){
+            if (selectedClassName != lastSelectedClassName)
+            {
+                lastSelectedClassName = selectedClassName;
+
+                if (onClassificationChangedHandler != null) {
+                    onClassificationChangedHandler(lastSelectedClassName);
+                }
+
+                let index = classNameArray.indexOf(lastSelectedClassName);
+                if (index > -1) {
+                    delegateArray[index]();
+                }
+            }
+            basic.pause(100);
+        }
+    });
 }
