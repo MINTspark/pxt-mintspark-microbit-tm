@@ -1,16 +1,10 @@
 {
     "ms_microbit_tm.showInfo": "Die MINTspark Google Teachable Machine Extension kann mit der folgenden Webseite verwendet werden: www.mintspark.io/microbit-tm/",
     "ms_microbit_tm.showInfo|block": "Verwende mit: www.mintspark.io/microbit-tm/",
-    "ms_microbit_tm.setClassificationThreshold": "Hier können Sie den Mindestschwellenwert festlegen, ab dem eine Klasse als erkannte Klasse ausgewählt werden soll. Bei einem Wert von 0 wird unabhängig von der Punktzahl die Klasse mit der höchsten Punktzahl ausgewählt.",
-    "ms_microbit_tm.setClassificationThreshold|block": "Mindest Score festlegen %certainty",
-    "ms_microbit_tm.onClassificationChanged": "Dieser Ereignisblock wird jedes Mal ausgeführt, wenn sich die Klassifizierung ändert. Wenn ein Mindest Score festgelegt wurde, muss die Klasse mit dem höchsten Score mindestens diesen Wert erreichen, damit dieser Block ausgeführt wird. Wenn alle Klassen unter dem Schwellenwert liegen, wird dieser Block NICHT ausgeführt.",
+    "ms_microbit_tm.onClassificationChanged": "Dieser Ereignisblock wird jedes Mal ausgeführt, wenn sich die Klassifizierung ändert. Wenn auf der Website ein Mindestscore festgelegt wurde, muss die Klasse mit der höchsten Punktzahl mindestens diesen Schwellenwert erreichen, um hier ausgelöst zu werden. Wenn alle Klassen unter den Schwellenwert fallen, wird dieser Block einmal mit einem leeren Klassennamen ausgeführt.",
     "ms_microbit_tm.onClassificationChanged|block": "Klasse Geändert",
-    "ms_microbit_tm.getSelectedClassName": "Ermittelt den Namen der aktuell ausgewählten Klasse. Wenn ein Mindestschwellenwert festgelegt wurde, gibt dieser Block einen leeren String zurück, wenn keine Klasse den Schwellenwert erreicht oder überschreitet.",
-    "ms_microbit_tm.getSelectedClassName|block": "Ausgewählte Klasse",
-    "ms_microbit_tm.getSelectedClassScore": "Ermittelt den Score der aktuell ausgewählten Klasse. Wenn ein Mindestschwellenwert festgelegt wurde, gibt dieser Block -1 zurück, wenn keine Klasse den Schwellenwert erreicht oder überschreitet.",
-    "ms_microbit_tm.getSelectedClassScore|block": "Score der ausgewählten Klasse",
-    "ms_microbit_tm.getClassScore": "Ermittelt den aktuellen Score für den übergebenen Klassennamen. Der Mindestschwellenwert hat keinen Einfluss auf diesen Block.",
-    "ms_microbit_tm.getClassScore|block": "Score für die Klasse %name",
-    "ms_microbit_tm.getClassNames": "Ein Text-Array mit allen Klassennamen.",
-    "ms_microbit_tm.getClassNames|block": "Alle Klassennamen"
+    "ms_microbit_tm.onClassificationChangedTo": "Dieser Ereignisblock wird jedes Mal ausgeführt, wenn sich die Klassifizierung auf den festgelegten Klassennamen ändert. Wenn auf der Website ein Mindestscore festgelegt wurde, muss die Klasse diesen Mindestscore erreichen, um hier ausgelöst zu werden.",
+    "ms_microbit_tm.onClassificationChangedTo|block": "Klasse Geändert auf",
+    "ms_microbit_tm.getSelectedClassName": "Namen der aktuell ausgewählten Klasse. Wenn ein Mindestschwellenwert festgelegt wurde, gibt dieser Block einen leeren String zurück, wenn keine Klasse den Schwellenwert erreicht oder überschreitet.",
+    "ms_microbit_tm.getSelectedClassName|block": "Ausgewählte Klasse"
 }

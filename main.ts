@@ -1,4 +1,7 @@
- //% weight=100 color=#DC22E1
+/**
+ * The MINTspark Google Teachable Machine Extension can be used with the following site: www.mintspark.io/microbit-tm/ to 
+ */
+//% weight=100 color=#DC22E1
 //% block="MINTspark Google TM"
 //% blockId="MINTspark Google TM"
 //% icon="\uf0e7"
@@ -19,9 +22,9 @@ namespace ms_microbit_tm {
     }
 
     /**
-     * This event block will run every time the classification changes. If a minimum score has been set then the top 
-     * scoring class needs to be at that threshold as a minimum for this block to run. If all classes are below the 
-     * threshold then this block will NOT run.
+     * This event block will run every time the classification changes. If a minimum score has been set 
+     * on the website then the top scoring class needs to be at that threshold as a minimum to be triggered
+     * here. If all classes fall below the threshold then this block will run once with an empty class name.
      */
     //% weight=50
     //% block="Class Changed"
@@ -32,6 +35,11 @@ namespace ms_microbit_tm {
         onClassificationChangedHandler = handler;
     }
 
+    /**  
+     * This event block will run every time the classification changes to the set class name. If a 
+     * minimum score has been set on the website then the class needs to be at that threshold as a 
+     * minimum to be triggered here
+     */
     //% weight=50
     //% block="%ClassName selected"
     //% color=#00B1ED
@@ -53,14 +61,12 @@ namespace ms_microbit_tm {
     // Read serial data
     serial.redirectToUSB();
 
+    // Process received data and set class name
     serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
-        let rxData = serial.readUntil(serial.delimiters(Delimiters.NewLine))
-        if (rxData != selectedClassName)
-        {
-            selectedClassName = rxData;
-        }
+        selectedClassName = serial.readUntil(serial.delimiters(Delimiters.NewLine))
     })
 
+    // Periodically check if class name has changed to trigger event blocks
     control.inBackground(() =>{
         while(true){
             if (selectedClassName != lastSelectedClassName)
