@@ -41,7 +41,7 @@ namespace ms_microbit_tm {
      * minimum score has been set on the website then the class needs to be at that threshold as a 
      * minimum to be triggered here
      */
-    //% weight=50
+    //% weight=45
     //% block="%ClassName selected"
     //% color=#00B1ED
     export function onClassificationChangedTo(ClassName: string, handler: () => void) {
@@ -52,7 +52,7 @@ namespace ms_microbit_tm {
     /**  
      * Once this function has been called all subsequent classification changes will be broadcast via radio on the passed in channel.
      */
-    //% weight=70
+    //% weight=40
     //% block="Broadcast classification changes on group %channel"
     //% color=#00B1ED
     export function startRadioBroadcastClassificationChanged(channel: number) {
@@ -63,7 +63,7 @@ namespace ms_microbit_tm {
     /**  
      * Once this function has been called classification changes will no longer be broadcast via radio.
      */
-    //% weight=60
+    //% weight=35
     //% block="Stop broadcast classification changes"
     //% color=#00B1ED
     export function stopRadioBroadcastClassificationChanged() {
