@@ -52,7 +52,7 @@ namespace ms_microbit_tm {
     /**  
      * Once this function has been called all subsequent classification changes will be broadcast via radio on the passed in channel.
      */
-    //% weight=95
+    //% weight=70
     //% block="Broadcast classification changes on group %channel"
     //% color=#00B1ED
     export function startRadioBroadcastClassificationChanged(channel: number) {
@@ -63,7 +63,7 @@ namespace ms_microbit_tm {
     /**  
      * Once this function has been called classification changes will no longer be broadcast via radio.
      */
-    //% weight=94
+    //% weight=60
     //% block="Stop broadcast classification changes"
     //% color=#00B1ED
     export function stopRadioBroadcastClassificationChanged() {
