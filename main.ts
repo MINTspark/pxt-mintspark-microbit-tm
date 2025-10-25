@@ -12,6 +12,7 @@ namespace ms_microbit_tm {
     let classNameArray : string[] = [];
     let delegateArray: (() => void)[] = [];
     let onClassificationChangedHandler: (predictionName: string) => void = null;
+    let broadcastClassificationChanged = false;
 
     /**
      * The MINTspark Google Teachable Machine Extension can be used with the following site: www.mintspark.io/microbit-tm/
@@ -48,6 +49,17 @@ namespace ms_microbit_tm {
         classNameArray.push(ClassName);
     }
 
+    /**  
+     * Once this function has been called all subsequent changed of classification will be broadcast via radio on the passed in channel.
+     */
+    //% weight=95
+    //% block="Start broadcast cahnges on channel %channel"
+    //% color=#00B1ED
+    export function startRadioBroadcastClassificationChanged(channel: number) {
+        radio.setGroup(channel);
+        broadcastClassificationChanged = true;       
+    }
+
     /**
      * Gets the name of the currently selected class. If a minimum threshold has been set then this block will return an empty string if no class is at the threshold or above.
      */
@@ -74,6 +86,9 @@ namespace ms_microbit_tm {
                 lastSelectedClassName = selectedClassName;
 
                 if (onClassificationChangedHandler != null) {
+                    if (broadcastChannel >= 0) {
+                        radio.sendString(lastSelectedClassName);
+                    }
                     onClassificationChangedHandler(lastSelectedClassName);
                 }
 
