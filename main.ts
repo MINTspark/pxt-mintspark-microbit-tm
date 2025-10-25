@@ -6,10 +6,10 @@
 //% blockId="MINTspark Google TM"
 //% icon="\uf0e7"
 //% inlineInputMode=external
-namespace ms_microbit_tm { 
+namespace ms_microbit_tm {
     let selectedClassName = "";
     let lastSelectedClassName = "";
-    let classNameArray : string[] = [];
+    let classNameArray: string[] = [];
     let delegateArray: (() => void)[] = [];
     let onClassificationChangedHandler: (predictionName: string) => void = null;
     let broadcastClassificationChanged = false;
@@ -44,20 +44,30 @@ namespace ms_microbit_tm {
     //% weight=50
     //% block="%ClassName selected"
     //% color=#00B1ED
-    export function onClassificationChangedTo(ClassName:string, handler: () => void) {
+    export function onClassificationChangedTo(ClassName: string, handler: () => void) {
         delegateArray.push(handler);
         classNameArray.push(ClassName);
     }
 
     /**  
-     * Once this function has been called all subsequent changed of classification will be broadcast via radio on the passed in channel.
+     * Once this function has been called all subsequent classification changes will be broadcast via radio on the passed in channel.
      */
     //% weight=95
-    //% block="Start broadcast cahnges on channel %channel"
+    //% block="Broadcast classification changes on group %channel"
     //% color=#00B1ED
     export function startRadioBroadcastClassificationChanged(channel: number) {
         radio.setGroup(channel);
-        broadcastClassificationChanged = true;       
+        broadcastClassificationChanged = true;
+    }
+
+    /**  
+     * Once this function has been called classification changes will no longer be broadcast via radio.
+     */
+    //% weight=94
+    //% block="Stop broadcast classification changes"
+    //% color=#00B1ED
+    export function stopRadioBroadcastClassificationChanged() {
+        broadcastClassificationChanged = false;
     }
 
     /**
@@ -79,14 +89,13 @@ namespace ms_microbit_tm {
     })
 
     // Periodically check if class name has changed to trigger event blocks
-    control.inBackground(() =>{
-        while(true){
-            if (selectedClassName != lastSelectedClassName)
-            {
+    control.inBackground(() => {
+        while (true) {
+            if (selectedClassName != lastSelectedClassName) {
                 lastSelectedClassName = selectedClassName;
 
                 if (onClassificationChangedHandler != null) {
-                    if (broadcastChannel >= 0) {
+                    if (broadcastClassificationChanged) {
                         radio.sendString(lastSelectedClassName);
                     }
                     onClassificationChangedHandler(lastSelectedClassName);
