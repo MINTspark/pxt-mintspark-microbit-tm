@@ -6,5 +6,9 @@
     "ms_microbit_tm.onClassificationChangedTo": "Dieser Ereignisblock wird jedes Mal ausgeführt, wenn sich die Klassifizierung auf den festgelegten Klassennamen ändert. Wenn auf der Website ein Mindestscore festgelegt wurde, muss die Klasse diesen Mindestscore erreichen, um hier ausgelöst zu werden.",
     "ms_microbit_tm.onClassificationChangedTo|block": "Klasse Geändert auf",
     "ms_microbit_tm.getSelectedClassName": "Namen der aktuell ausgewählten Klasse. Wenn ein Mindestschwellenwert festgelegt wurde, gibt dieser Block einen leeren String zurück, wenn keine Klasse den Schwellenwert erreicht oder überschreitet.",
-    "ms_microbit_tm.getSelectedClassName|block": "Ausgewählte Klasse"
+    "ms_microbit_tm.getSelectedClassName|block": "Ausgewählte Klasse",
+    "ms_microbit_tm.startRadioBroadcastClassificationChanged": "Nach dem Aufruf dieser Funktion werden alle nachfolgenden Klassifizierungsänderungen über Funk auf dem angegebenen Kanal übertragen.",
+    "ms_microbit_tm.startRadioBroadcastClassificationChanged|block": "Klassifizierungsänderungen in der Funkgruppe %channel übertragen",
+    "ms_microbit_tm.stopRadioBroadcastClassificationChanged": "Sobald diese Funktion aufgerufen wurde, werden Klassifizierungsänderungen nicht mehr über Funk übertragen.",
+    "ms_microbit_tm.stopRadioBroadcastClassificationChanged|block": "Klassifizierungsänderungen nicht per Funk übertragen"
 }
