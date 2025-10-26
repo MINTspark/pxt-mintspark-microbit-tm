@@ -1,12 +1,4 @@
 {
-    "ms_microbit_tm.showInfo": "Die MINTspark Google Teachable Machine Extension kann mit der folgenden Webseite verwendet werden: www.mintspark.io/microbit-tm/",
-    "ms_microbit_tm.showInfo|block": "Verwende mit: www.mintspark.io/microbit-tm/",
-    "ms_microbit_tm.onClassificationChanged": "Dieser Ereignisblock wird jedes Mal ausgeführt, wenn sich die Klassifizierung ändert. Wenn auf der Website ein Mindestscore festgelegt wurde, muss die Klasse mit der höchsten Punktzahl mindestens diesen Schwellenwert erreichen, um hier ausgelöst zu werden. Wenn alle Klassen unter den Schwellenwert fallen, wird dieser Block einmal mit einem leeren Klassennamen ausgeführt.",
-    "ms_microbit_tm.onClassificationChanged|block": "Klasse Geändert",
-    "ms_microbit_tm.onClassificationChangedTo": "Dieser Ereignisblock wird jedes Mal ausgeführt, wenn sich die Klassifizierung auf den festgelegten Klassennamen ändert. Wenn auf der Website ein Mindestscore festgelegt wurde, muss die Klasse diesen Mindestscore erreichen, um hier ausgelöst zu werden.",
-    "ms_microbit_tm.onClassificationChangedTo|block": "Klasse Geändert auf",
-    "ms_microbit_tm.getSelectedClassName": "Namen der aktuell ausgewählten Klasse. Wenn ein Mindestschwellenwert festgelegt wurde, gibt dieser Block einen leeren String zurück, wenn keine Klasse den Schwellenwert erreicht oder überschreitet.",
-    "ms_microbit_tm.getSelectedClassName|block": "Ausgewählte Klasse",
     "ms_microbit_tm.startRadioBroadcastClassificationChanged": "Nach dem Aufruf dieser Funktion werden alle nachfolgenden Klassifizierungsänderungen über Funk auf dem angegebenen Kanal übertragen.",
     "ms_microbit_tm.startRadioBroadcastClassificationChanged|block": "Klassifizierungsänderungen in der Funkgruppe %channel übertragen",
     "ms_microbit_tm.stopRadioBroadcastClassificationChanged": "Sobald diese Funktion aufgerufen wurde, werden Klassifizierungsänderungen nicht mehr über Funk übertragen.",
